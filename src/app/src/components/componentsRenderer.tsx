@@ -3,7 +3,6 @@ import * as React from "react";
 import { StrapiBlock } from "../models/components";
 import Grid from "./Grid";
 import GridItem from "./GridItem";
-import HeroComponent from "./Hero";
 import HeroInfoblock from "./HeroInfoblock";
 import LinkComponent from "./Link";
 import SEO from "./Seo";
@@ -95,6 +94,10 @@ export const query = graphql`
       }
       extra {
         variant
+        alert {
+          variant
+          severity
+        }
       }
     }
     ... on STRAPI__COMPONENT_SHARED_LINK {
@@ -108,6 +111,7 @@ export const query = graphql`
         slug
       }
       title
+      target
       externalurl
       image {
         alternativeText

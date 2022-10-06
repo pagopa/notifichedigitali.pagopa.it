@@ -1,4 +1,4 @@
-### Type definitions saved at 2022-10-06T09:58:36.639Z ###
+### Type definitions saved at 2022-10-06T15:36:36.821Z ###
 
 enum RemoteFileFit {
   COVER
@@ -427,8 +427,14 @@ type STRAPI_PAGE_BODY_TEXTNODE implements Node @childOf(types: ["STRAPI_PAGE"]) 
 
 union STRAPI__COMPONENT_SHARED_GRIDSTRAPI__COMPONENT_SHARED_HEROSTRAPI__COMPONENT_SHARED_LINKUnion = STRAPI__COMPONENT_SHARED_GRID | STRAPI__COMPONENT_SHARED_HERO | STRAPI__COMPONENT_SHARED_LINK
 
-type STRAPI__COMPONENT_SHARED_HERO_EXTRA_JSONNODE implements Node @childOf(types: ["STRAPI__COMPONENT_SHARED_HERO"]) @dontInfer {
+type STRAPI__COMPONENT_SHARED_HERO_EXTRA_JSONNODE implements Node @derivedTypes @childOf(types: ["STRAPI__COMPONENT_SHARED_HERO"]) @dontInfer {
   variant: String
+  alert: STRAPI__COMPONENT_SHARED_HERO_EXTRA_JSONNODEAlert
+}
+
+type STRAPI__COMPONENT_SHARED_HERO_EXTRA_JSONNODEAlert {
+  variant: String
+  severity: String
 }
 
 type STRAPI__COMPONENT_SHARED_HERO_BODY_TEXTNODE implements Node @childOf(types: ["STRAPI__COMPONENT_SHARED_HERO"]) @dontInfer {

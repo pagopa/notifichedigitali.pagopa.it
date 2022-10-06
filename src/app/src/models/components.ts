@@ -3,6 +3,22 @@ export enum HeroVariant {
   BLU = "blue",
   WHITE = "white",
 }
+export enum AlertSeverity {
+  ERROR = "error",
+  WARNING = "warning",
+  INFO = "info",
+  SUCCESS = "success",
+}
+
+export enum AlertVariant {
+  OUTLINED = "outlined",
+  STANDARD = "standard",
+}
+
+export interface AlertProps {
+  severity: AlertSeverity;
+  variant: AlertVariant;
+}
 export interface StrapiImage {
   url: string;
 }
@@ -38,7 +54,10 @@ export interface HeroProps extends StrapiBlock {
   cssclass?: string;
   reactcomponent?: string;
   buttons?: Array<LinkProps>;
-  extra?: { variant: HeroVariant };
+  extra?: {
+    variant?: HeroVariant;
+    alert?: AlertProps;
+  };
 }
 
 export interface GridItemProps extends LinkProps {}

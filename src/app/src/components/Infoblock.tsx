@@ -25,7 +25,10 @@ export default function InfoblockComponent(props: HeroProps) {
             props.buttons && props.buttons[0].page?.slug
               ? (window.location.href = props.buttons[0].page?.slug)
               : window
-                  .open(props.buttons && props.buttons[0].externalurl, "_blank")
+                  .open(
+                    props.buttons?.[0].externalurl,
+                    props.buttons?.[0].target
+                  )
                   ?.focus();
           },
         }
@@ -38,7 +41,10 @@ export default function InfoblockComponent(props: HeroProps) {
             props.buttons && props.buttons[1].page?.slug
               ? (window.location.href = props.buttons[1].page?.slug)
               : window
-                  .open(props.buttons && props.buttons[1].externalurl, "_blank")
+                  .open(
+                    props.buttons?.[1].externalurl,
+                    props.buttons?.[1].target
+                  )
                   ?.focus();
           },
         }
