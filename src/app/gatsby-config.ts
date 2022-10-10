@@ -45,7 +45,14 @@ const config: GatsbyConfig = {
             },
           },
         ],
-        singleTypes: [],
+        singleTypes: [
+          {
+            singularName: "navigation",
+            queryParams: {
+              populate: "deep",
+            },
+          },
+        ],
       },
     },
     {

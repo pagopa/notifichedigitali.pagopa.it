@@ -50,7 +50,7 @@ export interface HeroProps extends StrapiBlock {
   body: { data: { body: string } };
   images?: Array<StrapiImage>;
   imageposition?: ImagePosition;
-  attributes?: Array<string>;
+  attributes?: string;
   cssclass?: string;
   reactcomponent?: string;
   buttons?: Array<LinkProps>;
@@ -100,4 +100,20 @@ export interface WalkthroughProps {
 
 export interface StrapiBlock {
   __typename: string;
+}
+
+export interface NavigationTabsProps {
+  title: string;
+  titlemobile?: string;
+  body: { data: { body: string } };
+  image?: StrapiImage;
+  attributes?: string;
+  cssclass?: string;
+  reactcomponent?: string;
+  extra?: {
+    [key: string]: string;
+  };
+  externalurl?: string;
+  page?: PageProps;
+  target?: string;
 }

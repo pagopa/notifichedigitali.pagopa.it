@@ -3,14 +3,18 @@ import { theme } from "@pagopa/mui-italia";
 import { graphql, HeadFC } from "gatsby";
 import * as React from "react";
 import BlocksRenderer from "../components/componentsRenderer";
+import NavigationTabs from "../components/NavigationTabs";
 import SEO from "../components/Seo";
+import { NavigationTabsProps } from "../models/components";
 
 export default function Page({ data }: any) {
   const page = data.strapiPage;
+  const navigationItems = data.strapiNavigation.items as Array<NavigationTabsProps>;
 
   return (
     <>
       <ThemeProvider theme={theme}>
+        <NavigationTabs items={navigationItems} />
         <BlocksRenderer blocks={page.blocks || []} />
       </ThemeProvider>
     </>
@@ -56,6 +60,31 @@ export const query = graphql`
         data {
           body
         }
+      }
+    }
+    strapiNavigation {
+      title
+      items {
+        body {
+          data {
+            body
+          }
+        }
+        externalurl
+        extra {
+          id
+        }
+        image {
+          alternativeText
+          url
+        }
+        page {
+          slug
+        }
+        reactcomponent
+        target
+        title
+        titlemobile
       }
     }
   }

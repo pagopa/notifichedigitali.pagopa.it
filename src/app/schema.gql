@@ -1,4 +1,4 @@
-### Type definitions saved at 2022-10-06T15:36:36.821Z ###
+### Type definitions saved at 2022-10-07T12:56:47.316Z ###
 
 enum RemoteFileFit {
   COVER
@@ -383,6 +383,12 @@ type STRAPI__COMPONENT_SHARED_META_SOCIAL implements Node @dontInfer {
   strapi_id: Int
 }
 
+type STRAPI__COMPONENT_SHARED_LINK_EXTRA_JSONNODE implements Node @childOf(types: ["STRAPI__COMPONENT_SHARED_LINK"]) @dontInfer {
+  nothing: String
+  extra: String
+  stuff: String
+}
+
 type STRAPI__COMPONENT_SHARED_LINK_BODY_TEXTNODE implements Node @childOf(types: ["STRAPI__COMPONENT_SHARED_LINK"]) @dontInfer {
   body: String
 }
@@ -392,11 +398,15 @@ type STRAPI__COMPONENT_SHARED_LINK implements Node @derivedTypes @dontInfer {
   titlemobile: String
   body: STRAPI__COMPONENT_SHARED_LINKBody
   target: String
+  attributes: String
+  cssclass: String
+  reactcomponent: String
   externalurl: String
   page: STRAPI_PAGE @link(by: "id", from: "page___NODE")
   strapi_id: Int
-  strapi_component: String
+  extra: STRAPI__COMPONENT_SHARED_LINK_EXTRA_JSONNODE @link(by: "id", from: "extra___NODE")
   image: STRAPI__MEDIA @link(by: "id", from: "image___NODE")
+  strapi_component: String
 }
 
 type STRAPI__COMPONENT_SHARED_LINKBody {
@@ -490,4 +500,18 @@ type STRAPI__COMPONENT_GRID_GRIDITEMBody {
 
 type STRAPI__COMPONENT_GRID_GRIDITEM_BODY_TEXTNODE implements Node @childOf(types: ["STRAPI__COMPONENT_GRID_GRIDITEM"]) @dontInfer {
   body: String
+}
+
+type STRAPI_NAVIGATION_EXTRA_JSONNODE implements Node @childOf(types: ["STRAPI_NAVIGATION"]) @dontInfer {
+  stuff: String
+}
+
+type STRAPI_NAVIGATION implements Node @dontInfer {
+  title: String
+  createdAt: Date @dateformat
+  updatedAt: Date @dateformat
+  publishedAt: Date @dateformat
+  extra: STRAPI_NAVIGATION_EXTRA_JSONNODE @link(by: "id", from: "extra___NODE")
+  items: [STRAPI__COMPONENT_SHARED_LINK] @link(by: "id", from: "items___NODE")
+  strapi_id: Int
 }
