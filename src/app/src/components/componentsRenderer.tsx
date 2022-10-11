@@ -60,7 +60,7 @@ export const query = graphql`
           url
           localFile {
             childImageSharp {
-              gatsbyImageData
+              gatsbyImageData(height: 64, width: 64)
             }
             extension
           }
