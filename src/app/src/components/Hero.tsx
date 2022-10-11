@@ -1,6 +1,7 @@
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Hero } from "@pagopa/mui-italia";
 import * as React from "react";
+import ReactMarkdown from "react-markdown";
 import { HeroProps } from "../models/components";
 import getConfig from "../utils/config/config";
 
@@ -12,7 +13,11 @@ export default function HeroComponent(props: HeroProps) {
   return (
     <Hero
       title={isMobileDevice ? props.titlemobile || "" : props.title || ""}
-      subtitle={props.body?.data?.body}
+      subtitle={
+        <Typography variant="body2" component="div" sx={{ color: "white" }}>
+          <ReactMarkdown>{props.body?.data?.body || ""}</ReactMarkdown>
+        </Typography>
+      }
       inverse={props.imageposition === "left"}
       {...(props.images
         ? {

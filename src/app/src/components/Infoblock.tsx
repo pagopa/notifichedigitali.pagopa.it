@@ -1,6 +1,7 @@
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Infoblock } from "@pagopa/mui-italia";
 import * as React from "react";
+import ReactMarkdown from "react-markdown";
 import altIcon from "../images/altIcon.png";
 import { HeroProps } from "../models/components";
 import getConfig from "../utils/config/config";
@@ -11,7 +12,8 @@ export default function InfoblockComponent(props: HeroProps) {
   const isMobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
   const getImageAspectRatio = React.useCallback(
     () =>
-      (props.images?.[0].localFile?.childImageSharp?.original?.height as Number) >
+      (props.images?.[0].localFile?.childImageSharp?.original
+        ?.height as Number) >
       (props.images?.[0].localFile?.childImageSharp?.original?.width as Number)
         ? "9/16"
         : "4/3",
@@ -21,7 +23,11 @@ export default function InfoblockComponent(props: HeroProps) {
   return (
     <Infoblock
       title={isMobileDevice ? props.titlemobile || "" : props.title || ""}
-      content={props.body?.data?.body}
+      content={
+        <Typography variant="body2" component="div">
+          <ReactMarkdown>{props.body?.data?.body || ""}</ReactMarkdown>
+        </Typography>
+      }
       inverse={props.imageposition === "left"}
       imageShadow={false}
       aspectRatio={getImageAspectRatio()}
