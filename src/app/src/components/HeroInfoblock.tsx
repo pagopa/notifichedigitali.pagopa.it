@@ -31,7 +31,6 @@ export default function HeroInfoblock(props: HeroProps) {
             severity={alert.severity}
             variant={alert.variant}
             sx={{
-              my: 2,
               borderLeftColor: theme.palette.info.main + " !important",
               borderLeft: "4px solid",
               alignItems: "center",

@@ -62,6 +62,7 @@ export const query = graphql`
             childImageSharp {
               gatsbyImageData
             }
+            extension
           }
         }
         page {
@@ -80,6 +81,7 @@ export const query = graphql`
         alternativeText
         url
         localFile {
+          extension
           childImageSharp {
             gatsbyImageData
             original {
@@ -107,6 +109,7 @@ export const query = graphql`
           alternativeText
           url
           localFile {
+            extension
             childImageSharp {
               gatsbyImageData
             }
@@ -138,6 +141,7 @@ export const query = graphql`
         alternativeText
         url
         localFile {
+          extension
           childImageSharp {
             gatsbyImageData
           }

@@ -2,6 +2,7 @@ import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import * as React from "react";
 import { GridItemProps } from "../models/components";
+import ReactMarkdown from "react-markdown";
 export default function GridItem(
   props: GridItemProps & { navigable?: boolean; displayBody?: boolean }
 ) {
@@ -41,7 +42,7 @@ export default function GridItem(
           component={"div"}
           sx={{ color: theme.palette.text.secondary }}
         >
-          {props.body?.data?.body}
+          <ReactMarkdown>{props.body?.data?.body || ""}</ReactMarkdown>
         </Typography>
       )}
     </Box>

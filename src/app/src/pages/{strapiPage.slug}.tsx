@@ -1,4 +1,5 @@
 import { ThemeProvider } from "@emotion/react";
+import { Box, Typography } from "@mui/material";
 import { Footer, HeaderAccount, theme } from "@pagopa/mui-italia";
 import { graphql, HeadFC } from "gatsby";
 import * as React from "react";
@@ -32,7 +33,13 @@ export default function Page({ data }: any) {
           rootLink={pagoPALink}
           onAssistanceClick={onAssistanceClick}
         />
-        <NavigationTabs items={navigationItems} />
+        <Box display="flex" justifyContent="flex-start" alignItems="center" gap={2}>
+          <Typography variant="h5" component="div">
+            {page.seo.metaTitle}
+          </Typography>
+          <NavigationTabs items={navigationItems} />
+        </Box>
+
         <BlocksRenderer blocks={page.blocks || []} />
         <Footer
           loggedUser={false}
