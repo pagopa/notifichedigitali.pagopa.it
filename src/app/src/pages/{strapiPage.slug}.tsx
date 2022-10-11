@@ -6,7 +6,7 @@ import * as React from "react";
 import BlocksRenderer from "../components/componentsRenderer";
 import NavigationTabs from "../components/NavigationTabs";
 import SEO from "../components/Seo";
-import { LangCode, NavigationTabsProps } from "../models/components";
+import { LangCode, NavigationTabsProps, StrapiPageProps } from "../models/components";
 
 export default function Page({ data }: any) {
   const pagoPALink = {
@@ -17,7 +17,7 @@ export default function Page({ data }: any) {
   };
   const HELPDESK_URL: string = "https://www.pagopa.gov.it/it/helpdesk/";
 
-  const page = data.strapiPage;
+  const page = data.strapiPage as StrapiPageProps;
   const navigationItems = data.strapiNavigation
     .items as Array<NavigationTabsProps>;
 
@@ -44,7 +44,7 @@ export default function Page({ data }: any) {
             component="div"
             sx={{ whiteSpace: "nowrap", my: 2, mx: 3 }}
           >
-            {page.seo.metaTitle}
+            {page.seo?.metaTitle}
           </Typography>
           <NavigationTabs items={navigationItems} />
         </Box>

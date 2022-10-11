@@ -114,6 +114,39 @@ export interface NavigationTabsProps {
   target?: string;
 }
 
+export interface StrapiPageProps {
+  id?: string;
+  slug?: string;
+  title?: string;
+  titlemobile?: string;
+  seo?: {
+    canonicalURL?: string;
+    metaDescription?: string;
+    metaImage?: {
+      alternativeText?: string;
+      url?: string;
+    };
+    metaTitle?: string;
+    metaViewport?: string;
+    metaSocial?: {
+      description?: string;
+      image?: {
+        alternativeText?: string;
+        url?: string;
+      };
+      title?: string;
+      socialNetwork?: string;
+    };
+  };
+  description?: string;
+  blocks?: Array<HeroProps | GridProps | LinkProps>;
+  body?: {
+    data?: {
+      body?: string;
+    };
+  };
+}
+
 export type LangCode = "it" | "en";
 export type LangLabels = Record<LangCode, string>;
 export type Languages = Record<LangCode, LangLabels>;

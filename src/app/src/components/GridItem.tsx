@@ -37,11 +37,7 @@ export default function GridItem(
         {isMobileDevice ? props.titlemobile : props.title}
       </Typography>
       {props.displayBody && (
-        <Typography
-          variant="body2"
-          component={"div"}
-          sx={{ color: theme.palette.text.secondary }}
-        >
+        <Typography variant="body2" component="div">
           <ReactMarkdown>{props.body?.data?.body || ""}</ReactMarkdown>
         </Typography>
       )}

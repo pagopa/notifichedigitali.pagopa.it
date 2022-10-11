@@ -19,7 +19,11 @@ export default function NavigationTabs({
     <Box sx={{ width: "100%" }}>
       <Tabs value={value} onChange={handleChange} aria-label="tabs navigation">
         {items.map((item, index) => (
-          <Tab label={item.title} key={index} value={item.title} />
+          <Tab
+            label={item.title}
+            key={index}
+            value={item.title?.toLowerCase()}
+          />
         ))}
       </Tabs>
     </Box>
