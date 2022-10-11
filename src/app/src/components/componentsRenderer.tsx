@@ -1,8 +1,8 @@
 import { graphql } from "gatsby";
 import * as React from "react";
 import { StrapiBlock } from "../models/components";
-import Grid from "./Grid";
 import GridItem from "./GridItem";
+import GridWalk from "./GridWalk";
 import HeroInfoblock from "./HeroInfoblock";
 import LinkComponent from "./Link";
 import SEO from "./Seo";
@@ -13,7 +13,7 @@ const componentsMap: {
   STRAPI__COMPONENT_SHARED_HERO: HeroInfoblock,
   STRAPI__COMPONENT_SHARED_LINK: LinkComponent,
   STRAPI__COMPONENT_SHARED_GRIDITEM: GridItem,
-  STRAPI__COMPONENT_SHARED_GRID: Grid,
+  STRAPI__COMPONENT_SHARED_GRID: GridWalk,
   STRAPI__COMPONENT_SHARED_SEO: SEO,
 };
 
@@ -44,6 +44,7 @@ export const query = graphql`
       }
       title
       titlemobile
+      variant
       items {
         body {
           data {
@@ -53,9 +54,15 @@ export const query = graphql`
         title
         titlemobile
         externalurl
+        issequential
         image {
           alternativeText
           url
+          localFile {
+            childImageSharp {
+              gatsbyImageData
+            }
+          }
         }
         page {
           slug
@@ -70,8 +77,17 @@ export const query = graphql`
       }
       imageposition
       images {
-        url
         alternativeText
+        url
+        localFile {
+          childImageSharp {
+            gatsbyImageData
+            original {
+              height
+              width
+            }
+          }
+        }
       }
       title
       titlemobile
@@ -90,6 +106,11 @@ export const query = graphql`
         image {
           alternativeText
           url
+          localFile {
+            childImageSharp {
+              gatsbyImageData
+            }
+          }
         }
       }
       extra {
@@ -116,6 +137,11 @@ export const query = graphql`
       image {
         alternativeText
         url
+        localFile {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
       }
     }
   }

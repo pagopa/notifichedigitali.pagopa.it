@@ -19,6 +19,11 @@ export const useStrapiNavigation = () => {
           image {
             alternativeText
             url
+            localFile {
+              childImageSharp {
+                gatsbyImageData
+              }
+            }
           }
           page {
             slug

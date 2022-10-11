@@ -3,6 +3,10 @@ export enum HeroVariant {
   BLU = "blue",
   WHITE = "white",
 }
+export enum GridVariant {
+  GRID = "grid",
+  WALK = "walk",
+}
 export enum AlertSeverity {
   ERROR = "error",
   WARNING = "warning",
@@ -21,20 +25,22 @@ export interface AlertProps {
 }
 export interface StrapiImage {
   url: string;
+  localFile: any;
+  alternativeText: string;
 }
 export interface PageProps {
-  title: string;
+  title?: string;
   titleMobile?: string;
   description?: string;
-  slug: string;
-  body?: { data: { body: string } };
-  blocks: Array<GridProps | HeroProps | LinkProps>;
+  slug?: string;
+  body?: { data?: { body: string } };
+  blocks?: Array<GridProps | HeroProps | LinkProps>;
   seo?: SeoProps;
 }
 export interface LinkProps extends StrapiBlock {
-  title: string;
-  titlemobile: string;
-  body?: { data: { body: string } };
+  title?: string;
+  titlemobile?: string;
+  body?: { data?: { body?: string } };
   image?: StrapiImage;
   page?: PageProps;
   externalurl?: string;
@@ -45,9 +51,9 @@ export interface LinkProps extends StrapiBlock {
 }
 
 export interface HeroProps extends StrapiBlock {
-  title: string;
-  titlemobile: string;
-  body: { data: { body: string } };
+  title?: string;
+  titlemobile?: string;
+  body?: { data?: { body?: string } };
   images?: Array<StrapiImage>;
   imageposition?: ImagePosition;
   attributes?: string;
@@ -57,16 +63,20 @@ export interface HeroProps extends StrapiBlock {
   extra?: {
     variant?: HeroVariant;
     alert?: AlertProps;
+    type?: "";
   };
 }
 
-export interface GridItemProps extends LinkProps {}
+export interface GridItemProps extends LinkProps {
+  issequential?: boolean;
+}
 
 export interface GridProps extends StrapiBlock {
-  title: string;
-  titleMobile: string;
-  body?: { data: { body: string } };
-  items: Array<GridItemProps>;
+  title?: string;
+  titlemobile?: string;
+  body?: { data?: { body?: string } };
+  items?: Array<GridItemProps>;
+  variant?: GridVariant;
 }
 
 export interface SeoProps {
@@ -84,28 +94,14 @@ export interface SeoProps {
   metaViewport?: string;
   canonicalURL?: string;
 }
-
-export interface WalkthroughItem {
-  image?: StrapiImage;
-  title: string;
-  titleMobile: string;
-  body: { data: { body: string } };
-  isSequential?: boolean;
-}
-export interface WalkthroughProps {
-  title: string;
-  titleMobile: string;
-  body: Array<WalkthroughItem>;
-}
-
 export interface StrapiBlock {
   __typename: string;
 }
 
 export interface NavigationTabsProps {
-  title: string;
+  title?: string;
   titlemobile?: string;
-  body: { data: { body: string } };
+  body?: { data?: { body?: string } };
   image?: StrapiImage;
   attributes?: string;
   cssclass?: string;
@@ -117,3 +113,12 @@ export interface NavigationTabsProps {
   page?: PageProps;
   target?: string;
 }
+
+export type LangCode = "it" | "en";
+export type LangLabels = Record<LangCode, string>;
+export type Languages = Record<LangCode, LangLabels>;
+export type LangSwitchProps = {
+  currentLangCode?: LangCode;
+  languages: Languages;
+  onLanguageChanged: (newLang: LangCode) => void;
+};

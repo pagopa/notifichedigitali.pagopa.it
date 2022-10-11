@@ -51,7 +51,7 @@ export default function HeroInfoblock(props: HeroProps) {
               textAlign="left"
               whiteSpace="normal"
             >
-              {children?.body.data.body}
+              {children?.body?.data?.body}
             </Typography>
           </Alert>
         );

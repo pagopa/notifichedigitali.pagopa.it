@@ -11,8 +11,8 @@ export default function HeroComponent(props: HeroProps) {
 
   return (
     <Hero
-      title={isMobileDevice ? props.titlemobile : props.title}
-      subtitle={props.body.data.body}
+      title={isMobileDevice ? props.titlemobile || "" : props.title || ""}
+      subtitle={props.body?.data?.body}
       inverse={props.imageposition === "left"}
       {...(props.images
         ? {
@@ -25,8 +25,8 @@ export default function HeroComponent(props: HeroProps) {
           })}
       ctaPrimary={
         props.buttons?.[0] && {
-          label: props.buttons[0].title,
-          title: props.buttons[0].title,
+          label: props.buttons[0].title || "",
+          title: props.buttons[0].title || "",
           onClick: () => {
             props.buttons && props.buttons[0].page?.slug
               ? (window.location.href = props.buttons[0].page?.slug)
@@ -41,8 +41,8 @@ export default function HeroComponent(props: HeroProps) {
       }
       ctaSecondary={
         props.buttons?.[1] && {
-          label: props.buttons[1].title,
-          title: props.buttons[1].title,
+          label: props.buttons[1].title || "",
+          title: props.buttons[1].title || "",
           onClick: () => {
             props.buttons && props.buttons[1].page?.slug
               ? (window.location.href = props.buttons?.[1].page?.slug)

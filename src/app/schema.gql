@@ -478,6 +478,7 @@ type STRAPI__COMPONENT_SHARED_GRID implements Node @derivedTypes @dontInfer {
   body: STRAPI__COMPONENT_SHARED_GRIDBody
   items: [STRAPI__COMPONENT_GRID_GRIDITEM] @link(by: "id", from: "items___NODE")
   strapi_id: Int
+  variant: String
 }
 
 type STRAPI__COMPONENT_SHARED_GRIDBody {
@@ -492,6 +493,7 @@ type STRAPI__COMPONENT_GRID_GRIDITEM implements Node @derivedTypes @dontInfer {
   image: STRAPI__MEDIA @link(by: "id", from: "image___NODE")
   page: STRAPI_PAGE @link(by: "id", from: "page___NODE")
   strapi_id: Int
+  issequential: Boolean
 }
 
 type STRAPI__COMPONENT_GRID_GRIDITEMBody {
