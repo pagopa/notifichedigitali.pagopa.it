@@ -17,17 +17,11 @@ export default function NavigationTabs({
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Box>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="tabs navigation"
-        >
-          {items.map((item, index) => (
-            <Tab label={item.title} key={index} value={item.title} />
-          ))}
-        </Tabs>
-      </Box>
+      <Tabs value={value} onChange={handleChange} aria-label="tabs navigation">
+        {items.map((item, index) => (
+          <Tab label={item.title} key={index} value={item.title} />
+        ))}
+      </Tabs>
     </Box>
   );
 }

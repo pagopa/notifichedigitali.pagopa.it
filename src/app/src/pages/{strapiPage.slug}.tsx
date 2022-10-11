@@ -33,8 +33,17 @@ export default function Page({ data }: any) {
           rootLink={pagoPALink}
           onAssistanceClick={onAssistanceClick}
         />
-        <Box display="flex" justifyContent="flex-start" alignItems="center" gap={2}>
-          <Typography variant="h5" component="div">
+        <Box
+          display="flex"
+          justifyContent="flex-start"
+          alignItems="center"
+          gap={2}
+        >
+          <Typography
+            variant="h5"
+            component="div"
+            sx={{ whiteSpace: "nowrap", my: 2, mx: 3 }}
+          >
             {page.seo.metaTitle}
           </Typography>
           <NavigationTabs items={navigationItems} />
