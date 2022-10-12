@@ -19,6 +19,7 @@ export default function HeroComponent(props: HeroProps) {
         </Typography>
       }
       inverse={props.imageposition === "left"}
+      background={props.images?.[1]?.url}
       {...(props.images
         ? {
             image: `${appConfig.STRAPI_API_URL}${props.images[0].url}`,

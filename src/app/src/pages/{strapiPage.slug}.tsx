@@ -6,7 +6,13 @@ import * as React from "react";
 import BlocksRenderer from "../components/componentsRenderer";
 import NavigationTabs from "../components/NavigationTabs";
 import SEO from "../components/Seo";
-import { LangCode, NavigationTabsProps, StrapiPageProps } from "../models/components";
+import { useSiteMetadata } from "../hooks/useSiteMetadata";
+import {
+  LangCode,
+  NavigationTabsProps,
+  SeoProps,
+  StrapiPageProps,
+} from "../models/components";
 
 export default function Page({ data }: any) {
   const pagoPALink = {
@@ -20,6 +26,12 @@ export default function Page({ data }: any) {
   const page = data.strapiPage as StrapiPageProps;
   const navigationItems = data.strapiNavigation
     .items as Array<NavigationTabsProps>;
+
+  const { metaTitle: defaultTitle }: SeoProps = useSiteMetadata();
+
+  const seo = {
+    title: page.seo?.metaTitle || defaultTitle,
+  };
 
   const onAssistanceClick = React.useCallback(() => {
     window.open(HELPDESK_URL, "_blank")?.focus();
@@ -44,7 +56,7 @@ export default function Page({ data }: any) {
             component="div"
             sx={{ whiteSpace: "nowrap", my: 2, mx: 3 }}
           >
-            {page.seo?.metaTitle}
+            {seo.title}
           </Typography>
           <NavigationTabs items={navigationItems} />
         </Box>

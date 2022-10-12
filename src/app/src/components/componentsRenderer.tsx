@@ -63,6 +63,7 @@ export const query = graphql`
               gatsbyImageData(height: 64, width: 64)
             }
             extension
+            publicURL
           }
         }
         page {
