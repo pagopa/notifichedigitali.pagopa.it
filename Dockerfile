@@ -11,7 +11,7 @@ WORKDIR /app
 COPY src/app .
 
 # Install dependencies and run build
-RUN yarn --frozen-lockfile
+RUN PREFIX_PATHS=true; yarn --frozen-lockfile
 EXPOSE 8000
 
 CMD ["yarn", "develop"]
