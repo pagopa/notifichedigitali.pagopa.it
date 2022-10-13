@@ -9,15 +9,11 @@ import getConfig from "../utils/config/config";
 
 export default function InfoblockComponent(props: HeroProps) {
   const appConfig = getConfig();
-  const getImageAspectRatio = React.useCallback(
-    () =>
-      (props.images?.[0].localFile?.childImageSharp?.original
-        ?.height as Number) >
-      (props.images?.[0].localFile?.childImageSharp?.original?.width as Number)
-        ? "9/16"
-        : "4/3",
-    []
-  );
+  const getImageAspectRatio = () =>
+    (props.images?.[0].localFile?.childImageSharp?.original?.height as Number) >
+    (props.images?.[0].localFile?.childImageSharp?.original?.width as Number)
+      ? "9/16"
+      : "4/3";
 
   return (
     <Infoblock
