@@ -1,18 +1,16 @@
-import { useMediaQuery, useTheme } from "@mui/material";
 import { Walkthrough } from "@pagopa/mui-italia";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import * as React from "react";
 import { GridProps } from "../models/components";
+import { getTitle } from "../utils/components/formatter";
 import getConfig from "../utils/config/config";
 
 export default function WalkthroughComponent(props: GridProps) {
-  const theme = useTheme();
   const appConfig = getConfig();
-  const isMobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Walkthrough
-      title={isMobileDevice ? props.titlemobile || "" : props.title || ""}
+      title={getTitle(props)}
       items={
         props.items?.map((item) => ({
           icon: item.image ? (
@@ -29,7 +27,7 @@ export default function WalkthroughComponent(props: GridProps) {
               />
             )
           ) : undefined,
-          title: isMobileDevice ? item.titlemobile || "" : item.title || "",
+          title: getTitle(item),
           subtitle: item.body?.data?.body || "",
           isSequential: item.issequential ?? true,
         })) || []

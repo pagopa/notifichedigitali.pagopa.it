@@ -1,4 +1,4 @@
-import { Alert, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Alert, Typography, useTheme } from "@mui/material";
 import * as React from "react";
 import {
   AlertSeverity,
@@ -6,12 +6,12 @@ import {
   HeroProps,
   HeroVariant,
 } from "../models/components";
+import { getTitle } from "../utils/components/formatter";
 import HeroComponent from "./Hero";
 import InfoblockComponent from "./Infoblock";
 
 export default function HeroInfoblock(props: HeroProps) {
   const theme = useTheme();
-  const isMobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
   const variant = props.extra?.variant;
   const alert = props.extra?.alert;
 
@@ -19,11 +19,11 @@ export default function HeroInfoblock(props: HeroProps) {
     ({
       variant,
       alert,
-      children,
+      hero,
     }: {
       variant?: HeroVariant;
       alert?: { severity: AlertSeverity; variant: AlertVariant };
-      children?: HeroProps;
+      hero: HeroProps;
     }) => {
       if (alert) {
         return (
@@ -42,7 +42,7 @@ export default function HeroInfoblock(props: HeroProps) {
               textAlign="left"
               whiteSpace="normal"
             >
-              {isMobileDevice ? children?.titlemobile : children?.title}
+              {getTitle(hero)}
             </Typography>
             <Typography
               variant="body2"
@@ -50,7 +50,7 @@ export default function HeroInfoblock(props: HeroProps) {
               textAlign="left"
               whiteSpace="normal"
             >
-              {children?.body?.data?.body}
+              {hero?.body?.data?.body}
             </Typography>
           </Alert>
         );
@@ -64,5 +64,5 @@ export default function HeroInfoblock(props: HeroProps) {
     []
   );
 
-  return <>{getBlock({ variant, alert, children: props })}</>;
+  return <>{getBlock({ variant, alert, hero: props })}</>;
 }

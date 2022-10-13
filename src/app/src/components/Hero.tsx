@@ -1,18 +1,17 @@
-import { Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Hero } from "@pagopa/mui-italia";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import { HeroProps } from "../models/components";
+import { getTitle } from "../utils/components/formatter";
 import getConfig from "../utils/config/config";
 
 export default function HeroComponent(props: HeroProps) {
-  const theme = useTheme();
   const appConfig = getConfig();
-  const isMobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Hero
-      title={isMobileDevice ? props.titlemobile || "" : props.title || ""}
+      title={getTitle(props)}
       subtitle={
         <Typography variant="body2" component="div" sx={{ color: "white" }}>
           <ReactMarkdown>{props.body?.data?.body || ""}</ReactMarkdown>

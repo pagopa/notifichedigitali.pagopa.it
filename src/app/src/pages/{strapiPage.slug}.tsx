@@ -7,12 +7,8 @@ import BlocksRenderer from "../components/componentsRenderer";
 import NavigationTabs from "../components/NavigationTabs";
 import SEO from "../components/Seo";
 import { useSiteMetadata } from "../hooks/useSiteMetadata";
-import {
-  LangCode,
-  NavigationTabsProps,
-  SeoProps,
-  StrapiPageProps,
-} from "../models/components";
+import { useStrapiNavigation } from "../hooks/useStrapiNavigation";
+import { SeoProps, StrapiPageProps } from "../models/components";
 
 export default function Page({ data }: any) {
   const pagoPALink = {
@@ -24,14 +20,8 @@ export default function Page({ data }: any) {
   const HELPDESK_URL: string = "https://www.pagopa.gov.it/it/helpdesk/";
 
   const page = data.strapiPage as StrapiPageProps;
-  const navigationItems = data.strapiNavigation
-    .items as Array<NavigationTabsProps>;
-
+  const navigationItems = useStrapiNavigation();
   const { metaTitle: defaultTitle }: SeoProps = useSiteMetadata();
-
-  const seo = {
-    title: page.seo?.metaTitle || defaultTitle,
-  };
 
   const onAssistanceClick = React.useCallback(() => {
     window.open(HELPDESK_URL, "_blank")?.focus();
@@ -56,7 +46,7 @@ export default function Page({ data }: any) {
             component="div"
             sx={{ whiteSpace: "nowrap", my: 2, mx: 3 }}
           >
-            {seo.title}
+            {defaultTitle}
           </Typography>
           <NavigationTabs items={navigationItems} />
         </Box>
@@ -136,36 +126,6 @@ export const query = graphql`
         data {
           body
         }
-      }
-    }
-    strapiNavigation {
-      title
-      items {
-        body {
-          data {
-            body
-          }
-        }
-        externalurl
-        extra {
-          id
-        }
-        image {
-          alternativeText
-          url
-          localFile {
-            childImageSharp {
-              gatsbyImageData
-            }
-          }
-        }
-        page {
-          slug
-        }
-        reactcomponent
-        target
-        title
-        titlemobile
       }
     }
   }

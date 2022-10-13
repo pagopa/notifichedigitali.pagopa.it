@@ -36,5 +36,5 @@ export const useStrapiNavigation = () => {
       }
     }
   `);
-  return data.strapiNavigation as NavigationTabsProps;
+  return data.strapiNavigation.items as Array<NavigationTabsProps>;
 };

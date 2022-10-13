@@ -1,13 +1,13 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import * as React from "react";
-import { GridItemProps } from "../models/components";
 import ReactMarkdown from "react-markdown";
+import { GridItemProps } from "../models/components";
+import { getTitle } from "../utils/components/formatter";
 export default function GridItem(
   props: GridItemProps & { navigable?: boolean; displayBody?: boolean }
 ) {
   const theme = useTheme();
-  const isMobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Box
@@ -34,7 +34,7 @@ export default function GridItem(
             : theme.palette.text.primary,
         }}
       >
-        {isMobileDevice ? props.titlemobile : props.title}
+        {getTitle(props)}
       </Typography>
       {props.displayBody && (
         <Typography variant="body2" component="div">

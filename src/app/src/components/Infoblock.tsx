@@ -1,15 +1,14 @@
-import { Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Infoblock } from "@pagopa/mui-italia";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import altIcon from "../images/altIcon.png";
 import { HeroProps } from "../models/components";
+import { getTitle } from "../utils/components/formatter";
 import getConfig from "../utils/config/config";
 
 export default function InfoblockComponent(props: HeroProps) {
-  const theme = useTheme();
   const appConfig = getConfig();
-  const isMobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
   const getImageAspectRatio = React.useCallback(
     () =>
       (props.images?.[0].localFile?.childImageSharp?.original
@@ -22,7 +21,7 @@ export default function InfoblockComponent(props: HeroProps) {
 
   return (
     <Infoblock
-      title={isMobileDevice ? props.titlemobile || "" : props.title || ""}
+      title={getTitle(props)}
       content={
         <Typography variant="body2" component="div">
           <ReactMarkdown>{props.body?.data?.body || ""}</ReactMarkdown>
