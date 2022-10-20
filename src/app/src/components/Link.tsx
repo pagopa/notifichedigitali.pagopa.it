@@ -2,6 +2,7 @@ import { Link } from "@mui/material";
 import * as React from "react";
 import { LinkProps } from "../models/components";
 import GridItem from "./GridItem";
+import isBrowser from "../utils/browser";
 
 export default function LinkComponent(props: LinkProps) {
   return (
@@ -12,7 +13,7 @@ export default function LinkComponent(props: LinkProps) {
       style={{ textDecoration: "none", cursor: "pointer" }}
       onClick={() => {
         const route = props.page?.slug || "";
-        !props.externalurl && (window.location.href = "/" + route);
+        !props.externalurl && isBrowser && (window.location.href = "/" + route);
       }}
     >
       <GridItem {...{ image: props.image, ...props, navigable: true }} />

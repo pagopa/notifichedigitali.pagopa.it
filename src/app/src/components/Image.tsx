@@ -10,7 +10,7 @@ export default function Image(props: StrapiImage) {
     <>
       {props.localFile?.extension === "svg" ? (
         <img
-          src={`${appConfig.STRAPI_API_URL}${props.url}`}
+          src={`${props.url}`}
           alt={props.alternativeText}
           style={{ width: "64px", height: "64px" }}
         />

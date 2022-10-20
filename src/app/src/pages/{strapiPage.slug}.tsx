@@ -1,6 +1,8 @@
 import { ThemeProvider } from "@emotion/react";
-import { Box, Typography } from "@mui/material";
-import { Footer, HeaderAccount, theme } from "@pagopa/mui-italia";
+import { Box, Typography, Chip } from "@mui/material";
+import { Footer } from "@pagopa/mui-italia/dist/components/Footer";
+import { HeaderAccount } from "@pagopa/mui-italia/dist/components/HeaderAccount";
+import { theme } from "@pagopa/mui-italia/dist/theme";
 import { graphql, HeadFC } from "gatsby";
 import * as React from "react";
 import BlocksRenderer from "../components/componentsRenderer";
@@ -9,6 +11,7 @@ import SEO from "../components/Seo";
 import { useSiteMetadata } from "../hooks/useSiteMetadata";
 import { useStrapiNavigation } from "../hooks/useStrapiNavigation";
 import { SeoProps, StrapiPageProps } from "../models/components";
+import isBrowser from "../utils/browser";
 
 export default function Page({ data }: any) {
   const pagoPALink = {
@@ -24,7 +27,7 @@ export default function Page({ data }: any) {
   const { metaTitle: defaultTitle }: SeoProps = useSiteMetadata();
 
   const onAssistanceClick = React.useCallback(() => {
-    window.open(HELPDESK_URL, "_blank")?.focus();
+    isBrowser && window.open(HELPDESK_URL, "_blank")?.focus();
   }, []);
 
   return (
@@ -44,10 +47,11 @@ export default function Page({ data }: any) {
           <Typography
             variant="h5"
             component="div"
-            sx={{ whiteSpace: "nowrap", my: 2, mx: 3 }}
+            sx={{ whiteSpace: "nowrap", my: 2, ml: 2 }}
           >
             {defaultTitle}
           </Typography>
+          <Chip label="Beta" size="small" color="primary" />
           <NavigationTabs items={navigationItems} />
         </Box>
 

@@ -84,7 +84,7 @@ export const query = graphql`
         localFile {
           extension
           childImageSharp {
-            gatsbyImageData
+            gatsbyImageData(quality: 80)
             original {
               height
               width

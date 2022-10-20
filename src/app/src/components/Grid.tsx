@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { Showcase } from "@pagopa/mui-italia";
+import { Showcase } from "@pagopa/mui-italia/dist/components/Showcase";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import { GridProps } from "../models/components";
