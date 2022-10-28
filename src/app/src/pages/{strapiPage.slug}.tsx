@@ -42,16 +42,24 @@ export default function Page({ data }: any) {
           display="flex"
           justifyContent="flex-start"
           alignItems="center"
-          gap={2}
+          flexDirection={{ xs: "column", sm: "row" }}
+          gap={{ sm: 2 }}
         >
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{ whiteSpace: "nowrap", my: 2, ml: 2 }}
+          <Box
+            display="flex"
+            justifyContent="flex-start"
+            alignItems="center"
+            width={{ xs: "100%", sm: "auto" }}
           >
-            {defaultTitle}
-          </Typography>
-          <Chip label="Beta" size="small" color="primary" />
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{ whiteSpace: "nowrap", p: 2 }}
+            >
+              {defaultTitle}
+            </Typography>
+            <Chip label="Beta" size="small" color="primary" />
+          </Box>
           <NavigationTabs items={navigationItems} />
         </Box>
 
