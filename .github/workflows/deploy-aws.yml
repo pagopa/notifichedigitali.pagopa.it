@@ -26,6 +26,10 @@ on:
         options:
         - dev
         - prod
+  # Allows external webhook trigger
+  repository_dispatch:
+    types:
+      - webhook
 
 env:
  AWS_REGION: eu-south-1
