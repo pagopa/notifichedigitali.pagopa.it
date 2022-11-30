@@ -32,11 +32,11 @@ on:
       - webhook
 
 env:
- AWS_REGION: eu-south-1
+ AWS_REGION: eu-central-1
  IAM_ROLE: arn:aws:iam::516175876821:role/GitHubActionDeployS3
  ENVIRONMENT:  github.event.inputs.environment || 'dev'
- AWS_BUCKET: pn-d-website-2162
- AWS_CLOUDFRONT_ID: E2NZ9SUK5QDTJG
+ AWS_BUCKET: pn-d-website-4229
+ AWS_CLOUDFRONT_ID: E3N4Q7VLCPYZUD
 
 defaults:
   run:
