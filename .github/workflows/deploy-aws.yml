@@ -54,13 +54,13 @@ jobs:
         run:
           echo "AWS_BUCKET=pn-d-website-4229" >> $GITHUB_ENV
           echo "AWS_CLOUDFRONT_ID=E3N4Q7VLCPYZUD" >> $GITHUB_ENV
-          echo "STRAPI_URL=https://cms.poc.pn.pagopa.it" >> $GITHUB_ENV
+          echo "STRAPI_URL='https://cms.poc.pn.pagopa.it'" >> $GITHUB_ENV
       - name: Init Prod
         if: "${{ github.event.inputs.environment == 'prod' }}"
         run:
           echo "AWS_BUCKET=cms-p-website-2428" >> $GITHUB_ENV
           echo "AWS_CLOUDFRONT_ID=E3N3EGPA4RVVH1" >> $GITHUB_ENV
-          echo "STRAPI_URL=http://cms-alb-1558790704.eu-central-1.elb.amazonaws.com" >> $GITHUB_ENV
+          echo "STRAPI_URL='http://cms-alb-1558790704.eu-central-1.elb.amazonaws.com'" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v2
       
