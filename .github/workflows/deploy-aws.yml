@@ -32,11 +32,7 @@ on:
       - webhook
 
 env:
- AWS_REGION: eu-central-1
- ENVIRONMENT:  github.event.inputs.environment || 'dev'
- AWS_BUCKET: ${{ github.event.inputs.environment == 'dev' && 'pn-d-website-4229' || 'cms-p-website-2428' }}
- AWS_CLOUDFRONT_ID: ${{ github.event.inputs.environment == 'dev' && 'E3N4Q7VLCPYZUD' || 'E3N3EGPA4RVVH1' }} 
- STRAPI_URL: ${{ github.event.inputs.environment == 'dev' && 'https://cms.poc.pn.pagopa.it' || 'http://cms-alb-1558790704.eu-central-1.elb.amazonaws.com' }} 
+  AWS_REGION: eu-central-1
  
 defaults:
   run:
@@ -53,6 +49,18 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }} 
     steps:
+      - name: Init Dev 
+        if: "${{ github.event.inputs.environment == 'dev' }}"
+        run:
+          echo "AWS_BUCKET=pn-d-website-4229" >> $GITHUB_ENV
+          echo "AWS_CLOUDFRONT_ID=E3N4Q7VLCPYZUD" >> $GITHUB_ENV
+          echo "STRAPI_URL=https://cms.poc.pn.pagopa.it" >> $GITHUB_ENV
+      - name: Init Prod
+        if: "${{ github.event.inputs.environment == 'prod' }}"
+        run:
+          echo "AWS_BUCKET=cms-p-website-2428" >> $GITHUB_ENV
+          echo "AWS_CLOUDFRONT_ID=E3N3EGPA4RVVH1" >> $GITHUB_ENV
+          echo "STRAPI_URL=http://cms-alb-1558790704.eu-central-1.elb.amazonaws.com" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v2
       
