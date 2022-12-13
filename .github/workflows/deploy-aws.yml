@@ -49,6 +49,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }} 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
       - name: Init Dev 
         if: "${{ github.event.inputs.environment == 'dev' }}"
         run: |
@@ -61,9 +64,7 @@ jobs:
           echo "AWS_BUCKET=cms-p-website-2428" >> $GITHUB_ENV
           echo "AWS_CLOUDFRONT_ID=E3N3EGPA4RVVH1" >> $GITHUB_ENV
           echo "STRAPI_URL=http://cms-alb-1558790704.eu-central-1.elb.amazonaws.com" >> $GITHUB_ENV
-      - name: Checkout
-        uses: actions/checkout@v2
-      
+            
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
