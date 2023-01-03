@@ -15,8 +15,8 @@ on:
   # webhook trigger  
   repository_dispatch:
     types:
-      - webhook-peview-dev
-      - webhook-peview-prod
+      - webhook-preview-dev
+      - webhook-preview-prod
   
 env:
   AWS_REGION: eu-central-1
