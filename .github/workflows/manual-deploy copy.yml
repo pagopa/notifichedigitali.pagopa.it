@@ -1,4 +1,4 @@
-name: "Deploy AWS"
+name: "AWS Manual deploy"
 
 on:
   workflow_dispatch:
