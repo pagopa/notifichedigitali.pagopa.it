@@ -11,6 +11,12 @@ on:
         options:
         - dev
         - prod
+
+  # webhook trigger  
+  repository_dispatch:
+    types:
+      - dev
+      - prod
   
 env:
   AWS_REGION: eu-central-1
@@ -49,6 +55,18 @@ jobs:
       
       - name: Build and Deploy
         if: ${{ inputs.environment == matrix.environment }}
+        uses: ./.github/workflows/deploy
+        with:
+          env: ${{ inputs.environment }}
+          aws_region: ${{ env.AWS_REGION }}
+          cms_url: ${{ matrix.CMS_URL }}
+          strapi_token: ${{ secrets.STRAPI_TOKEN }}
+          aws_iam_role: ${{ secrets.IAM_ROLE }} 
+          aws_bucket: ${{ matrix.AWS_BUCKET }}
+          aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
+
+      - name: Webhook Build and Deploy
+        if: ${{ github.event.action == matrix.environment }}
         uses: ./.github/workflows/deploy
         with:
           env: ${{ inputs.environment }}
