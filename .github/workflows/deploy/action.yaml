@@ -18,6 +18,11 @@ inputs:
     required: true
     type: string
 
+defaults:
+  run:
+    shell: bash
+    working-directory: src/app
+
 runs:
   using: "composite"
   steps:        
