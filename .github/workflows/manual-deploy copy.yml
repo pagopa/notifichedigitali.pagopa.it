@@ -52,5 +52,7 @@ jobs:
           env: ${{ inputs.environment }}
           aws_region: ${{ env.AWS_REGION }}
           cms_url: ${{ matrix.CMS_URL }}
+          strapi_token: ${{ secrets.STRAPI_TOKEN }}
+          aws_iam_role: ${{ secrets.IAM_ROLE }} 
           aws_bucket: ${{ matrix.AWS_BUCKET }}
           aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
