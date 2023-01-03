@@ -9,15 +9,6 @@ on:
       - '.github/workflows/*.yml'
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning' 
-        type: choice
-        options:
-        - info
-        - warning
-        - debug
       environment:
         description: 'Which environment to update.'
         type: choice
@@ -29,7 +20,8 @@ on:
   # Allows external webhook trigger
   repository_dispatch:
     types:
-      - webhook
+      - webhook-dev
+      - webhook-prod
 
 env:
   AWS_REGION: eu-central-1
@@ -47,24 +39,24 @@ jobs:
   deploy:
     name: "deploy"
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }} 
+    strategy:
+      matrix:
+        include:
+          - environment: 'dev'
+            AWS_BUCKET: 'pn-d-website-4229'
+            AWS_CLOUDFRONT_ID: 'E3N4Q7VLCPYZUD'
+            STRAPI_URL: 'https://cms.poc.pn.pagopa.it'
+          - environment: 'prod'
+            AWS_BUCKET: 'cms-p-website-2428'
+            AWS_CLOUDFRONT_ID: 'E3N3EGPA4RVVH1'
+            STRAPI_URL: 'http://cms-alb-1558790704.eu-central-1.elb.amazonaws.com'
+    
+    environment: ${{ matrix.environment }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
-      - name: Init Dev 
-        if: "${{ github.event.inputs.environment == 'dev' }}"
-        run: |
-          echo "AWS_BUCKET=pn-d-website-4229" >> $GITHUB_ENV
-          echo "AWS_CLOUDFRONT_ID=E3N4Q7VLCPYZUD" >> $GITHUB_ENV
-          echo "STRAPI_URL=https://cms.poc.pn.pagopa.it" >> $GITHUB_ENV
-      - name: Init Prod
-        if: "${{ github.event.inputs.environment == 'prod' }}"
-        run: |
-          echo "AWS_BUCKET=cms-p-website-2428" >> $GITHUB_ENV
-          echo "AWS_CLOUDFRONT_ID=E3N3EGPA4RVVH1" >> $GITHUB_ENV
-          echo "STRAPI_URL=http://cms-alb-1558790704.eu-central-1.elb.amazonaws.com" >> $GITHUB_ENV
-            
+              
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -81,10 +73,6 @@ jobs:
         run: |
           yarn install
           yarn build
-      - name: Check 
-        run: | 
-          pwd
-          ls -lrt
       - name: s3-publish
         uses: jonelantha/gatsby-s3-action@v1
         with:
