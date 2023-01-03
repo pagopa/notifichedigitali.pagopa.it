@@ -66,7 +66,7 @@ jobs:
           aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
 
       - name: Webhook Build and Deploy
-        if: ${{ github.event.action == 'webhook-live-' + matrix.environment }}
+        if: ${{ github.event.action == 'webhook-live-{matrix.environment}' }}
         uses: ./.github/workflows/deploy
         with:
           env: ${{ inputs.environment }}
