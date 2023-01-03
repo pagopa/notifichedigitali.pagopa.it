@@ -1,0 +1,53 @@
+name: "Deploy AWS"
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Which environment to update.'
+        type: choice
+        default: 'dev'
+        required: true 
+        options:
+        - dev
+        - prod
+  
+env:
+  AWS_REGION: eu-central-1
+ 
+defaults:
+  run:
+    shell: bash
+    working-directory: src/app
+
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  deploy:
+    name: "deploy"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - environment: 'dev'
+            AWS_BUCKET: 'pn-d-website-4229'
+            AWS_CLOUDFRONT_ID: 'E3N4Q7VLCPYZUD'
+            CMS_URL: 'https://cms.poc.pn.pagopa.it'
+          - environment: 'prod'
+            AWS_BUCKET: 'cms-p-website-2428'
+            AWS_CLOUDFRONT_ID: 'E3N3EGPA4RVVH1'
+            CMS_URL: 'http://cms-alb-1558790704.eu-central-1.elb.amazonaws.com'
+    
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: Build and Deploy
+        uses: ./.github/workflows/deploy
+        with:
+          env: ${{ inputs.environment }}
+          aws_region: ${{ env.AWS_REGION }}
+          cms_url: ${{ matrix.CMS_URL }}
+          aws_bucket: ${{ matrix.AWS_BUCKET }}
+          aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}

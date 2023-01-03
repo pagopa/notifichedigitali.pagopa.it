@@ -39,25 +39,24 @@ jobs:
   deploy:
     name: "deploy"
     runs-on: ubuntu-latest
-    matrix:
-          environment: [dev, prod]
+    strategy:
+      matrix:
+        include:
+          - environment: 'dev'
+            AWS_BUCKET: 'pn-d-website-4229'
+            AWS_CLOUDFRONT_ID: 'E3N4Q7VLCPYZUD'
+            STRAPI_URL: 'https://cms.poc.pn.pagopa.it'
+          - environment: 'prod'
+            AWS_BUCKET: 'cms-p-website-2428'
+            AWS_CLOUDFRONT_ID: 'E3N3EGPA4RVVH1'
+            STRAPI_URL: 'http://cms-alb-1558790704.eu-central-1.elb.amazonaws.com'
+    
+    environment: ${{ matrix.environment }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
-      - name: Init Dev 
-        if: ${{ inputs.environment == matrix.environment  }} || ${{ inputs.environment == '' }} || ${{ github.event.action == 'webhook-dev' }}
-        run: |
-          echo "AWS_BUCKET=pn-d-website-4229" >> $GITHUB_ENV
-          echo "AWS_CLOUDFRONT_ID=E3N4Q7VLCPYZUD" >> $GITHUB_ENV
-          echo "STRAPI_URL=https://cms.poc.pn.pagopa.it" >> $GITHUB_ENV
-      - name: Init Prod
-        if: ${{ inputs.environment == matrix.environment  }} || ${{ inputs.environment == '' }} || ${{ github.event.action == 'webhook-prod' }}
-        run: |
-          echo "AWS_BUCKET=cms-p-website-2428" >> $GITHUB_ENV
-          echo "AWS_CLOUDFRONT_ID=E3N3EGPA4RVVH1" >> $GITHUB_ENV
-          echo "STRAPI_URL=http://cms-alb-1558790704.eu-central-1.elb.amazonaws.com" >> $GITHUB_ENV
-            
+              
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

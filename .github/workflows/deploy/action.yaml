@@ -1,0 +1,49 @@
+name: deploy
+description: Build and deploy
+
+inputs:
+  env:
+    required: true
+    type: string
+  aws_region:
+    required: true
+    type: string
+  cms_url:
+    required: true
+    type: string
+  aws_bucket:
+    required: true
+    type: string
+  aws_cloudfront_id:
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
+            
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838
+      with:
+        role-to-assume: ${{ secrets.IAM_ROLE }}
+        aws-region: ${{ inpusts.aws_region }}
+    - name: Use Node.js
+      uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
+      with:
+        node-version: 16
+    - name: Build
+      working-directory: src/app
+      env: 
+        STRAPI_TOKEN: ${{ secrets.STRAPI_TOKEN }}
+        STRAPI_API_URL: ${{ inputs.cms_url }}
+      run: |
+        yarn install
+        yarn build
+    - name: s3-publish
+      uses: jonelantha/gatsby-s3-action@6886fa8db9cb48761715caac380ee6861b00ed12
+      with:
+        dest-s3-bucket: ${{ inputs.aws_bucket }}
+        cloudfront-id-to-invalidate: ${{ inputs.aws_cloudfront_id }}
+        public-source-path: src/app/public    
