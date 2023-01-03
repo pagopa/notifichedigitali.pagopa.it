@@ -29,6 +29,7 @@ jobs:
     name: "deploy"
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 1
       matrix:
         include:
           - environment: 'dev'
@@ -40,17 +41,20 @@ jobs:
             AWS_CLOUDFRONT_ID: 'E3N3EGPA4RVVH1'
             CMS_URL: 'http://cms-alb-1558790704.eu-central-1.elb.amazonaws.com'
     
-    environment: ${{ inputs.environment }}
+    environment: ${{ matrix.environment }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
       
       - name: Build and Deploy
+        if: ${{ inputs.environment == matrix.environment }}
         uses: ./.github/workflows/deploy
         with:
           env: ${{ inputs.environment }}
           aws_region: ${{ env.AWS_REGION }}
           cms_url: ${{ matrix.CMS_URL }}
+          strapi_token: ${{ secrets.STRAPI_TOKEN }}
+          aws_iam_role: ${{ secrets.IAM_ROLE }} 
           aws_bucket: ${{ matrix.AWS_BUCKET }}
           aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
