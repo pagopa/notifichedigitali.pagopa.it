@@ -1,0 +1,78 @@
+name: "AWS Deploy Preview"
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Which environment to update.'
+        type: choice
+        default: 'dev'
+        required: true 
+        options:
+        - dev
+        - prod
+
+  # webhook trigger  
+  repository_dispatch:
+    types:
+      - webhook-peview-dev
+      - webhook-peview-prod
+  
+env:
+  AWS_REGION: eu-central-1
+ 
+defaults:
+  run:
+    shell: bash
+    working-directory: src/app
+
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  deploy:
+    name: "deploy"
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        include:
+          - environment: 'dev'
+            AWS_BUCKET: 'pn-d-preview-2750'
+            AWS_CLOUDFRONT_ID: 'E153LH7QSLHX6W'
+            CMS_URL: 'https://cms.poc.pn.pagopa.it'
+          - environment: 'prod'
+            AWS_BUCKET: 'cms-p-preview-9183'
+            AWS_CLOUDFRONT_ID: 'ET6G5N5731KGP'
+            CMS_URL: 'http://cms-alb-1558790704.eu-central-1.elb.amazonaws.com'
+    
+    environment: ${{ matrix.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
+      
+      - name: Build and Deploy
+        if: ${{ inputs.environment == matrix.environment }}
+        uses: ./.github/workflows/deploy
+        with:
+          env: ${{ inputs.environment }}
+          aws_region: ${{ env.AWS_REGION }}
+          cms_url: ${{ matrix.CMS_URL }}
+          strapi_token: ${{ secrets.STRAPI_TOKEN }}
+          aws_iam_role: ${{ secrets.IAM_ROLE }} 
+          aws_bucket: ${{ matrix.AWS_BUCKET }}
+          aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
+
+      - name: Webhook Build and Deploy
+        if: ${{ github.event.action == 'webhook-preview-{matrix.environment}' }}
+        uses: ./.github/workflows/deploy
+        with:
+          env: ${{ inputs.environment }}
+          aws_region: ${{ env.AWS_REGION }}
+          cms_url: ${{ matrix.CMS_URL }}
+          strapi_token: ${{ secrets.STRAPI_TOKEN }}
+          aws_iam_role: ${{ secrets.IAM_ROLE }} 
+          aws_bucket: ${{ matrix.AWS_BUCKET }}
+          aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
