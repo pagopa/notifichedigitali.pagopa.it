@@ -42,8 +42,8 @@ runs:
         node-version: 16
 
     - name: Yarn cache directory
-        id: yarn-cache-dir
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      id: yarn-cache-dir
+      run: echo "::set-output name=dir::$(yarn cache dir)"
 
     - name: Yarn cache
       uses: actions/cache@v1
