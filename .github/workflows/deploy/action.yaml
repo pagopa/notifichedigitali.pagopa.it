@@ -41,6 +41,20 @@ runs:
       with:
         node-version: 16
 
+    - name: Yarn cache directory
+        id: yarn-cache-dir
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - name: Yarn cache
+      uses: actions/cache@v1
+      id: yarn-cache
+      with:
+        path: ${{ steps.yarn-cache-dir.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+
     - name: Gatsby Cache Folder
       uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d
       id: gatsby-cache-folder
