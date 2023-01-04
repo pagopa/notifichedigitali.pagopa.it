@@ -57,9 +57,8 @@ runs:
     - name: Gatsby Cache Folder
       uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d
       id: gatsby-cache-folder
-      working-directory: src/app
       with:
-        path: .cache
+        path: src/app/.cache
         key: ${{ runner.os }}-cache-gatsby
         restore-keys: |
           ${{ runner.os }}-cache-gatsby
@@ -67,9 +66,8 @@ runs:
     - name: Gatsby Public Folder
       uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d
       id: gatsby-public-folder
-      working-directory: src/app
       with:
-        path: public/
+        path: src/app/public/
         key: ${{ runner.os }}-public-gatsby
         restore-keys: |
           ${{ runner.os }}-public-gatsby
@@ -80,4 +78,4 @@ runs:
       with:
         dest-s3-bucket: ${{ inputs.aws_bucket }}
         cloudfront-id-to-invalidate: ${{ inputs.aws_cloudfront_id }}
-        public-source-path: src/app/public    
+        public-source-path: src/app/public
