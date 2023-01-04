@@ -47,9 +47,35 @@ runs:
       env: 
         STRAPI_TOKEN: ${{ inputs.strapi_token }}
         STRAPI_API_URL: ${{ inputs.cms_url }}
+        GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
+        NODE_ENV: production
+        CI: true
       run: |
         yarn install
-        yarn build
+        yarn build --log-pages
+    
+    - name: Gatsby Cache Folder
+      uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d
+      id: gatsby-cache-folder
+      shell: bash
+      working-directory: src/app
+      with:
+        path: .cache
+        key: ${{ runner.os }}-cache-gatsby
+        restore-keys: |
+          ${{ runner.os }}-cache-gatsby
+    
+    - name: Gatsby Public Folder
+      uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d
+      id: gatsby-public-folder
+      shell: bash
+      working-directory: src/app
+      with:
+        path: public/
+        key: ${{ runner.os }}-public-gatsby
+        restore-keys: |
+          ${{ runner.os }}-public-gatsby
+    
     - name: s3-publish
       id: publish
       uses: jonelantha/gatsby-s3-action@6886fa8db9cb48761715caac380ee6861b00ed12
