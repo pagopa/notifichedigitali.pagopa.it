@@ -40,20 +40,7 @@ runs:
       uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
       with:
         node-version: 16
-    - name: Build
-      id: build
-      shell: bash
-      working-directory: src/app
-      env: 
-        STRAPI_TOKEN: ${{ inputs.strapi_token }}
-        STRAPI_API_URL: ${{ inputs.cms_url }}
-        GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
-        NODE_ENV: production
-        CI: true
-      run: |
-        yarn install
-        yarn build --log-pages
-    
+
     - name: Gatsby Cache Folder
       uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d
       id: gatsby-cache-folder
@@ -71,6 +58,20 @@ runs:
         key: ${{ runner.os }}-public-gatsby
         restore-keys: |
           ${{ runner.os }}-public-gatsby
+    
+    - name: Build
+      id: build
+      shell: bash
+      working-directory: src/app
+      env: 
+        STRAPI_TOKEN: ${{ inputs.strapi_token }}
+        STRAPI_API_URL: ${{ inputs.cms_url }}
+        GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
+        NODE_ENV: production
+        CI: true
+      run: |
+        yarn install
+        yarn build --log-pages
     
     - name: s3-publish
       id: publish
