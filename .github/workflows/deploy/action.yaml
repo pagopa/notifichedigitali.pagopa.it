@@ -43,12 +43,12 @@ runs:
 
     - name: Yarn cache directory
       id: yarn-cache-dir
+      shell: bash
       run: echo "::set-output name=dir::$(yarn cache dir)"
 
     - name: Yarn cache
-      uses: actions/cache@v1
+      uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d
       id: yarn-cache
-      shell: bash
       with:
         path: ${{ steps.yarn-cache-dir.outputs.dir }}
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
