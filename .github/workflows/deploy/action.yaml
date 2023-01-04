@@ -23,6 +23,10 @@ inputs:
   aws_cloudfront_id:
     required: true
     type: string
+  build_with_cache:
+    required: false
+    type: bool
+    default: true
 
 
 runs:
@@ -40,6 +44,37 @@ runs:
       uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
       with:
         node-version: 16
+
+    - name: Yarn cache
+      if: ${{ inputs.build_with_cache == true }}
+      uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d
+      id: yarn-cache
+      with:
+        path: ${{ steps.yarn-cache-dir.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Gatsby Cache Folder
+      if: ${{ inputs.build_with_cache == true }}
+      uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d
+      id: gatsby-cache-folder
+      with:
+        path: src/app/.cache
+        key: ${{ runner.os }}-cache-gatsby
+        restore-keys: |
+          ${{ runner.os }}-cache-gatsby
+    
+    - name: Gatsby Public Folder
+      if: ${{ inputs.build_with_cache == true }}
+      uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d
+      id: gatsby-public-folder
+      with:
+        path: src/app/public/
+        key: ${{ runner.os }}-public-gatsby
+        restore-keys: |
+          ${{ runner.os }}-public-gatsby
+    
     - name: Build
       id: build
       shell: bash
