@@ -66,10 +66,10 @@ jobs:
           aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
 
       - run: echo "Action ${{ github.event.action }}"
-      - run: echo "Event type ${{ github.event.event_type }}"
+      - run: echo "webhook-live-{matrix.environment}"
 
       - name: Webhook Build and Deploy
-        if: ${{ github.event.event_type == 'webhook-live-{matrix.environment}' }}
+        # if: ${{ github.event.event_type == 'webhook-live-{matrix.environment}' }}
         uses: ./.github/workflows/deploy
         with:
           env: ${{ inputs.environment }}
@@ -79,3 +79,4 @@ jobs:
           aws_iam_role: ${{ secrets.IAM_ROLE }} 
           aws_bucket: ${{ matrix.AWS_BUCKET }}
           aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
+          event_type: 'webhook-live-{matrix.environment}'
