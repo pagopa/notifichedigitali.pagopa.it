@@ -66,7 +66,6 @@ jobs:
           aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
 
       - name: Webhook Build and Deploy
-        if: ${{ github.event.action == 'webhook-preview-{matrix.environment}' }}
         uses: ./.github/workflows/deploy
         with:
           env: ${{ inputs.environment }}
@@ -76,3 +75,4 @@ jobs:
           aws_iam_role: ${{ secrets.IAM_ROLE }} 
           aws_bucket: ${{ matrix.AWS_BUCKET }}
           aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
+          event_type: 'webhook-preview-{matrix.environment}'
