@@ -68,7 +68,7 @@ jobs:
       - run: echo "action ${{ github.event.action }}"
 
       - name: Webhook Build and Deploy
-        if:  ${{ github.event.action ==  format('webhook-live-{0}', matrix.environment) }}
+        if:  ${{ github.event.action ==  format('webhook-preview-{0}', matrix.environment) }}
         uses: ./.github/workflows/deploy
         with:
           env: ${{ inputs.environment }}
