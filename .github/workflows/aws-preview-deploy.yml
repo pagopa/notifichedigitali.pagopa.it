@@ -11,6 +11,14 @@ on:
         options:
         - dev
         - prod
+      cache:
+        description: 'Cache yarn and gatsby builds.'
+        type: choice
+        default: true
+        required: true 
+        options:
+        - true
+        - false
 
   # webhook trigger  
   repository_dispatch:
@@ -64,6 +72,7 @@ jobs:
           aws_iam_role: ${{ secrets.IAM_ROLE }} 
           aws_bucket: ${{ matrix.AWS_BUCKET }}
           aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
+          build_with_cache: ${{ inputs.cache }}
 
       - name: Webhook Build and Deploy
         if:  ${{ github.event.action ==  format('webhook-preview-{0}', matrix.environment) }}
@@ -76,3 +85,4 @@ jobs:
           aws_iam_role: ${{ secrets.IAM_ROLE }} 
           aws_bucket: ${{ matrix.AWS_BUCKET }}
           aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
+          build_with_cache: true
