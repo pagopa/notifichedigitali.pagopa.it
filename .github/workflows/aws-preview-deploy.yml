@@ -65,8 +65,6 @@ jobs:
           aws_bucket: ${{ matrix.AWS_BUCKET }}
           aws_cloudfront_id: ${{ matrix.AWS_CLOUDFRONT_ID }}
 
-      - run: echo "action ${{ github.event.action }}"
-
       - name: Webhook Build and Deploy
         if:  ${{ github.event.action ==  format('webhook-preview-{0}', matrix.environment) }}
         uses: ./.github/workflows/deploy
